@@ -1,0 +1,11 @@
+type Region {
+  id: Int!
+  name: String!
+  departments: [Department!]
+}
+
+type Query {
+  getRegions: [Region!]
+
+  getRegionById(id: Int): Region
+}

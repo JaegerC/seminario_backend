@@ -1,0 +1,12 @@
+type Branch {
+  id: Int
+  name: String
+  address: String
+  number: Int
+  is_active: Boolean
+  createdAt: DateTime
+  updatedAt: DateTime
+  commerce: Commerce
+  municipality: Municipality 
+  complaints: [Complaint!]
+}

@@ -1,0 +1,33 @@
+type CommerType {
+  id: Int
+  name: String
+}
+
+type Commerce {
+  id: Int
+  name: String
+  trade_patent: String
+  nit: String
+  is_active: Boolean
+  createdAt: DateTime
+  updatedAt: DateTime
+  branches: [Branch!]
+  commerce_type: CommerType
+}
+
+type CommerceByFilterResponse {
+  success: Boolean
+  data: [Commerce!],
+  error: String
+}
+
+type Query {
+  getCommerceByFilter(
+    commerce_name: String,
+    regionId: Int,
+    departmentId: Int,
+    municipalityId: Int
+  ): CommerceByFilterResponse
+
+  getCommerces: [Commerce!]
+}

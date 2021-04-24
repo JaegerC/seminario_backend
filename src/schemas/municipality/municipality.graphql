@@ -1,0 +1,10 @@
+type Municipality {
+  id: Int
+  name: String
+  department: Department!
+}
+
+type Query {
+  getMunicipalities: [Municipality!]
+  getMunicipalityById(id: Int!): Municipality
+}

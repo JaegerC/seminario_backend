@@ -1,0 +1,15 @@
+scalar DateTime
+
+type User {
+  id: Int
+  name: String
+  lastname: String
+  phone: String
+  date_of_birth: DateTime
+  email: String
+  password: String
+  isActive: Boolean
+  createdAt: DateTime
+  updatedAt: DateTime
+  role: Role
+}

@@ -1,0 +1,11 @@
+type Department {
+  id: Int
+  name: String
+  region: Region
+  municipalities: [Municipality!]
+}
+
+type Query {
+  getDepartments: [Department!]
+  getDepartmentById(id: Int): Department
+}

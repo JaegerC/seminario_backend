@@ -1,0 +1,30 @@
+type Complaint {
+  id: Int
+  detail: String
+  request: String
+  doc_invoice: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  branch: Branch
+}
+
+type ComplaintFilterResponse {
+  success: Boolean,
+  error: String
+  data: [Complaint!]
+  count: Int
+}
+
+type ComplaitByCommerce {
+  success: Boolean,
+  error: String
+  data: Commerce
+  count: Int
+}
+
+type Query {
+  getComplaintByCommerce(commerceId: Int): ComplaitByCommerce
+  getComplaintByRegion(regionId: Int): ComplaintFilterResponse
+  getComplaintByDepartment(departmentId: Int): ComplaintFilterResponse
+  getComplaintByMunicipality(municipalityId: Int): ComplaintFilterResponse
+}

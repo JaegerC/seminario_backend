@@ -1,0 +1,11 @@
+type Module {
+  id: Int
+  name: String
+  isActive: Boolean
+  roles: [Role!]
+}
+
+type Query {
+  getModules: [Module!]
+  getModuleById: Module
+}
