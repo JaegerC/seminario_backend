@@ -2,6 +2,7 @@ type Municipality {
   id: Int
   name: String
   department: Department!
+  branches: [Branch!]
 }
 
 type Query {

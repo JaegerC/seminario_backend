@@ -18,21 +18,21 @@ export class ComplaintResolver {
   @Query()
   async getComplaintByRegion(
     @Args('regionId') regionId: number
-  ): Promise<any[]> {
+  ): Promise<any> {
     return await this.complaintService.getComplaintByRegion(regionId);
   }
 
   @Query()
   async getComplaintByDepartment(
     @Args('departmentId') departmentId: number
-  ): Promise<any[]> {
+  ): Promise<any> {
     return await this.complaintService.getComplaintByDepartment(departmentId);
   }
 
   @Query()
   async getComplaintByMunicipality(
     @Args('municipalityId') municipalityId: number
-  ): Promise<any[]> {
+  ): Promise<any> {
     return await this.complaintService.getComplaintByMunicipality(municipalityId);
   }
 }

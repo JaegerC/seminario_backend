@@ -49,15 +49,8 @@ export class CommerceService {
         throw new NotAcceptableException("Debe de proporcionar por lo menos un parametro de busqueda");
       }
 
-      console.log({
-        commerce_name,
-        regionId,
-        departmentId,
-        municipalityId
-      })
       let commerce: Commerce[] = null;
       if (municipalityId && municipalityId !== 0) {
-        console.log("entrando a la consulta");
         commerce = await this.connection.getRepository(Commerce)
           .createQueryBuilder("commerce")
           .leftJoinAndSelect("commerce.commerce_type", "commerce_type")
@@ -68,7 +61,7 @@ export class CommerceService {
           .leftJoinAndSelect("department.region", "region")
           .where("branches.municipalityId = :municipalityId", { municipalityId })
           .getMany();
-        console.log(commerce[0].branches[0].municipality);
+
       } else if (departmentId && departmentId !== 0 && municipalityId === 0) {
         commerce = await this.connection.getRepository(Commerce)
           .createQueryBuilder("commerce")

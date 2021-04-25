@@ -5906,13 +5906,13 @@
         "affectsGlobalScope": false
       },
       "../src/schemas/complaint/complaint.service.ts": {
-        "version": "84b03c3afec0469d257da77c0afb8e83e2c43a03b56c95b078ef602c2e5e2578",
-        "signature": "51e5b214aa9f0ed63f25fe2c9ba32e68b8e0ac24ed112c6e09876ede9e5e3ee7",
+        "version": "14b5f7181a75636862f64363016edba75abc137e3a55fd8e8745bef88b69e6da",
+        "signature": "acc4ec21d51bdaa33715cb617a5fe2361c2fa739978329056125b861dc307e43",
         "affectsGlobalScope": false
       },
       "../src/schemas/complaint/complaint.resolver.ts": {
-        "version": "9ecc511ea7d9ffdf264d8ddbb21068a3d87f760be5b2582ebdad6414c83988de",
-        "signature": "18283cbc3c47101217a385c5f351732a81fcd2778037eea7b619eab1fc735aeb",
+        "version": "55125b368c9d968b0a041551d5c6295e1a7de3bebbb40e0fca1db403d4b4b3d6",
+        "signature": "a34d25891e226b46010732232e879775a215a79634377ffea2b374a37f89e678",
         "affectsGlobalScope": false
       },
       "../src/schemas/complaint/complaint.module.ts": {
@@ -5936,7 +5936,7 @@
         "affectsGlobalScope": false
       },
       "../src/main.ts": {
-        "version": "51e5208b07cfa3391a8477a07d78df47ca519f51a20b09a9cfdf1131b93d8c44",
+        "version": "2013034e24190f080511d0233017c9d2e7bc17526f3167a08435424a24f8a0c7",
         "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
         "affectsGlobalScope": false
       },
@@ -10933,7 +10933,10 @@
         "../node_modules/@nestjs/typeorm/index.d.ts",
         "../node_modules/typeorm/index.d.ts",
         "../src/entities/commerce.entity.ts",
-        "../src/entities/complaint.entity.ts"
+        "../src/entities/complaint.entity.ts",
+        "../src/entities/department.entity.ts",
+        "../src/entities/municipality.entity.ts",
+        "../src/entities/region.entity.ts"
       ],
       "../src/schemas/department/department.module.ts": [
         "../node_modules/@nestjs/common/index.d.ts",

@@ -22,9 +22,30 @@ type ComplaitByCommerce {
   count: Int
 }
 
+type ComplaintByRegion {
+  success: Boolean
+  error: String
+  data: Region
+  count: Int
+}
+
+type ComplaintByDepartment {
+  success: Boolean
+  error: String
+  data: Department
+  count: Int
+}
+
+type ComplaintByMunicipality {
+  success: Boolean
+  error: String
+  data: Municipality
+  count: Int
+}
+
 type Query {
   getComplaintByCommerce(commerceId: Int): ComplaitByCommerce
-  getComplaintByRegion(regionId: Int): ComplaintFilterResponse
-  getComplaintByDepartment(departmentId: Int): ComplaintFilterResponse
-  getComplaintByMunicipality(municipalityId: Int): ComplaintFilterResponse
+  getComplaintByRegion(regionId: Int): ComplaintByRegion
+  getComplaintByDepartment(departmentId: Int): ComplaintByDepartment
+  getComplaintByMunicipality(municipalityId: Int): ComplaintByMunicipality
 }

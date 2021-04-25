@@ -18,6 +18,9 @@ const typeorm_1 = require("@nestjs/typeorm");
 const complaint_entity_1 = require("../../entities/complaint.entity");
 const commerce_entity_1 = require("../../entities/commerce.entity");
 const typeorm_2 = require("typeorm");
+const region_entity_1 = require("../../entities/region.entity");
+const department_entity_1 = require("../../entities/department.entity");
+const municipality_entity_1 = require("../../entities/municipality.entity");
 let ComplaintService = class ComplaintService {
     constructor(complaintRespository, connection) {
         this.complaintRespository = complaintRespository;
@@ -58,16 +61,108 @@ let ComplaintService = class ComplaintService {
         }
     }
     async getComplaintByRegion(regionId) {
-        console.log(regionId);
-        return await this.complaintRespository.find({ relations: ['branch'] });
+        try {
+            const region = await this.connection.getRepository(region_entity_1.Region)
+                .createQueryBuilder("region")
+                .leftJoinAndSelect("region.departments", "departments")
+                .leftJoinAndSelect("departments.municipalities", "municipalities")
+                .leftJoinAndSelect("municipalities.branches", "branches")
+                .leftJoinAndSelect("branches.commerce", "commerce")
+                .leftJoinAndSelect("branches.complaints", "complaints")
+                .leftJoinAndSelect("commerce.commerce_type", "commerce_type")
+                .where("region.id = :regionId", { regionId })
+                .getOne();
+            const count = await this.connection.getRepository(complaint_entity_1.Complaint)
+                .createQueryBuilder("complaint")
+                .leftJoinAndSelect("complaint.branch", "branch")
+                .leftJoinAndSelect("branch.municipality", "municipality")
+                .leftJoinAndSelect("municipality.department", "department")
+                .where("department.regionId = :regionId", { regionId })
+                .getCount();
+            return {
+                success: true,
+                error: null,
+                data: region,
+                count
+            };
+        }
+        catch (err) {
+            return {
+                success: false,
+                error: err.message,
+                data: null,
+                count: null
+            };
+        }
     }
     async getComplaintByDepartment(departmentId) {
-        console.log(departmentId);
-        return await this.complaintRespository.find({ relations: ['branch'] });
+        try {
+            const department = await this.connection.getRepository(department_entity_1.Department)
+                .createQueryBuilder("department")
+                .leftJoinAndSelect("department.region", "region")
+                .leftJoinAndSelect("department.municipalities", "municipalities")
+                .leftJoinAndSelect("municipalities.branches", "branches")
+                .leftJoinAndSelect("branches.commerce", "commerce")
+                .leftJoinAndSelect("branches.complaints", "complaints")
+                .leftJoinAndSelect("commerce.commerce_type", "commerce_type")
+                .where("department.id = :departmentId", { departmentId })
+                .getOne();
+            const count = await this.connection.getRepository(complaint_entity_1.Complaint)
+                .createQueryBuilder("complaint")
+                .leftJoinAndSelect("complaint.branch", "branch")
+                .leftJoinAndSelect("branch.municipality", "municipality")
+                .leftJoinAndSelect("municipality.department", "department")
+                .where("department.id = :departmentId", { departmentId })
+                .getCount();
+            return {
+                success: true,
+                error: null,
+                data: department,
+                count
+            };
+        }
+        catch (e) {
+            return {
+                success: false,
+                error: e.message,
+                data: null,
+                count: null
+            };
+        }
     }
     async getComplaintByMunicipality(municipalityId) {
-        console.log(municipalityId);
-        return await this.complaintRespository.find({ relations: ['branch'] });
+        try {
+            const municipality = await this.connection.getRepository(municipality_entity_1.Municipality)
+                .createQueryBuilder("municipality")
+                .leftJoinAndSelect("municipality.department", "department")
+                .leftJoinAndSelect("department.region", "region")
+                .leftJoinAndSelect("municipality.branches", "branches")
+                .leftJoinAndSelect("branches.complaints", "complaints")
+                .leftJoinAndSelect("branches.commerce", "commerce")
+                .leftJoinAndSelect("commerce.commerce_type", "commerce_type")
+                .where("municipality.id = :municipalityId", { municipalityId })
+                .getOne();
+            const count = await this.connection.getRepository(complaint_entity_1.Complaint)
+                .createQueryBuilder("complaint")
+                .leftJoinAndSelect("complaint.branch", "branch")
+                .leftJoinAndSelect("branch.municipality", "municipality")
+                .where("municipality.id = :municipalityId", { municipalityId })
+                .getCount();
+            return {
+                success: true,
+                error: null,
+                data: municipality,
+                count
+            };
+        }
+        catch (e) {
+            return {
+                success: false,
+                error: e.message,
+                data: null,
+                count: null
+            };
+        }
     }
 };
 ComplaintService = __decorate([

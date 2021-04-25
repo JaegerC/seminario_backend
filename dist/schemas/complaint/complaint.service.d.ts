@@ -5,7 +5,7 @@ export declare class ComplaintService {
     private connection;
     constructor(complaintRespository: Repository<Complaint>, connection: Connection);
     getComplaintByCommerce(commerceId: number): Promise<any>;
-    getComplaintByRegion(regionId: number): Promise<Complaint[]>;
-    getComplaintByDepartment(departmentId: number): Promise<Complaint[]>;
-    getComplaintByMunicipality(municipalityId: number): Promise<Complaint[]>;
+    getComplaintByRegion(regionId: number): Promise<any>;
+    getComplaintByDepartment(departmentId: number): Promise<any>;
+    getComplaintByMunicipality(municipalityId: number): Promise<any>;
 }
