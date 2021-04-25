@@ -11,7 +11,7 @@ export class CommerceService {
   ) { }
 
   async getCommerces(): Promise<Commerce[]> {
-    return await this.commerceRepository.find({ where: { is_active: true } });;
+    return await this.commerceRepository.find({ where: { is_active: true }, relations: ['branches'] });;
   }
 
   async getCommerceDataById(commerceId: number): Promise<Commerce> {

@@ -49,3 +49,12 @@ type Query {
   getComplaintByDepartment(departmentId: Int): ComplaintByDepartment
   getComplaintByMunicipality(municipalityId: Int): ComplaintByMunicipality
 }
+
+type Mutation {
+  createComplaint(
+    detail: String
+    request: String
+    doc_invoice: String,
+    branchId: Int
+  ): Complaint
+}

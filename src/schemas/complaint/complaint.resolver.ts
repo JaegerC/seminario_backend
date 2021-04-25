@@ -1,4 +1,4 @@
-import { Args, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Complaint } from 'src/entities/complaint.entity';
 import { ComplaintService } from './complaint.service';
 
@@ -34,5 +34,15 @@ export class ComplaintResolver {
     @Args('municipalityId') municipalityId: number
   ): Promise<any> {
     return await this.complaintService.getComplaintByMunicipality(municipalityId);
+  }
+
+  @Mutation()
+  async createComplaint(
+    @Args('detail') detail: string,
+    @Args('request') request: string,
+    @Args('doc_invoice') doc_invoice: string,
+    @Args('branchId') branchId: number
+  ): Promise<Complaint> {
+    return await this.complaintService.createComplaint(detail, request, doc_invoice, branchId);
   }
 }

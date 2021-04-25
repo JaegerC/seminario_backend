@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Inject, Injectable, NotAcceptableException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Complaint } from 'src/entities/complaint.entity';
 import { Commerce } from 'src/entities/commerce.entity';
@@ -6,10 +6,12 @@ import { Connection, Repository } from 'typeorm';
 import { Region } from 'src/entities/region.entity';
 import { Department } from 'src/entities/department.entity';
 import { Municipality } from 'src/entities/municipality.entity';
+import { Branch } from 'src/entities/branch.entity';
 @Injectable()
 export class ComplaintService {
   constructor(
     @InjectRepository(Complaint) private complaintRespository: Repository<Complaint>,
+    @InjectRepository(Branch) private branchRepository: Repository<Branch>,
     private connection: Connection
   ) { }
 
@@ -152,6 +154,57 @@ export class ComplaintService {
         data: null,
         count: null
       }
+    }
+  }
+
+  async createComplaint(
+    detail: string,
+    request: string,
+    doc_invoice: string,
+    branchId: number
+  ): Promise<Complaint> {
+    const queryRunner = this.connection.createQueryRunner();
+    await queryRunner.startTransaction();
+    await queryRunner.connect();
+    try {
+      if (!detail || detail.trim() === "") {
+        throw new NotAcceptableException("El campo detalle no puede quedar vacio");
+      }
+
+      if (!doc_invoice || doc_invoice.trim() === "") {
+        throw new NotAcceptableException("Debe de ingresar un numero de factura");
+      }
+
+      if (!branchId || isNaN(branchId)) {
+        throw new NotAcceptableException("Debe de ingresar un numero de factura");
+      }
+
+      const branch = await this.branchRepository.findOne(branchId);
+
+      if (!branch) {
+        throw new NotFoundException("El comercio seleccionado no se encontró en el sistema");
+      }
+
+      const complaint = this.complaintRespository.create({
+        detail,
+        request,
+        doc_invoice,
+        branch
+      });
+
+      await this.connection.manager.save(complaint);
+
+      if (!complaint) {
+        throw new ConflictException("No se puedo agregar la queja");
+      }
+
+      await queryRunner.commitTransaction();
+      return complaint;
+    } catch (e) {
+      await queryRunner.rollbackTransaction();
+      return e;
+    } finally {
+      await queryRunner.release();
     }
   }
 }
